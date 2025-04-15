@@ -32,3 +32,26 @@ document.addEventListener("keydown", function (e) {
     closeModal();
   }
 });
+
+////////////////////////////////
+////////////////////////////////
+
+const header = document.querySelector(".header");
+
+const message = document.createElement("div");
+message.classList.add("cookie-message");
+// message.textContent =
+// "We use cookies for improved functionalitty and analytics.";
+message.innerHTML = `We use cookies for improved functionalitty and analytics. <button class="btn btn--close-cookie">Got it!</button>`;
+
+// header.prepend(message);
+header.append(message);
+// header.append(message.cloneNode(1));
+
+// Delete Elements
+document
+  .querySelector(".btn--close-cookie")
+  .addEventListener("click", function () {
+    // message.remove();
+    message.parentElement.removeChild(message);
+  });
