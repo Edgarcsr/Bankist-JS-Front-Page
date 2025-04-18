@@ -134,3 +134,20 @@ btnScrollTo.addEventListener("click", function (e) {
   // Modern Way
   section1.scrollIntoView({ behavior: "smooth" });
 });
+
+const h1 = document.querySelector("h1");
+const alertH1 = function () {
+  alert(`mouseenter: Great! You're reading the header!`);
+  // h1.removeEventListener("mouseenter", alertH1);
+};
+
+// Can add multiple event listeners
+h1.addEventListener("mouseenter", alertH1);
+
+// TimeOut
+setTimeout(() => h1.removeEventListener("mouseenter", alertH1), 3000);
+
+// Old school way
+// h1.onmouseenter(function (e) {
+//   alert(`mouseenter: Great! You're reading the header!`);
+// });
