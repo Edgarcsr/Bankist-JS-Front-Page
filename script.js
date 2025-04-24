@@ -138,9 +138,19 @@ const handleHover = function (e) {
   }
 };
 
+// Passing 'argument' to a handler
 nav.addEventListener("mouseover", handleHover.bind(0.5));
 
 nav.addEventListener("mouseout", handleHover.bind(1));
+
+const initialCords = section1.getBoundingClientRect();
+
+// Sticky Navigation
+window.addEventListener("scroll", function (e) {
+  console.log(window.scrollY);
+  if (window.scrollY > initialCords.top) nav.classList.add("sticky");
+  else nav.classList.remove("sticky");
+});
 
 ////////////////////////////////
 ////////////////////////////////
