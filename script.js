@@ -7,7 +7,8 @@ const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const btnCloseModal = document.querySelector(".btn--close-modal");
 const btnsOpenModal = document.querySelectorAll(".btn--show-modal");
-
+const btnScrollTo = document.querySelector(".btn--scroll-to");
+const section1 = document.querySelector("#section--1");
 const openModal = function (e) {
   e.preventDefault();
   modal.classList.remove("hidden");
@@ -32,6 +33,73 @@ document.addEventListener("keydown", function (e) {
     closeModal();
   }
 });
+////////////////////////////////
+// Button Scrolling
+
+btnScrollTo.addEventListener("click", function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  console.log(s1coords);
+  console.log(e.target.getBoundingClientRect());
+
+  console.log("Current Scroll pos", window.pageXOffset, window.pageYOffset);
+
+  console.log(
+    "Document Client Height/Width",
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
+
+  //  Scrolling
+  // window.scrollTo(
+  //   s1coords.left + window.pageXOffset,
+  //   s1coords.top + window.pageYOffset
+  // );
+
+  // Smooth Scroll
+  // window.scrollTo({
+  //   left: s1coords.left + window.pageXOffset,
+  //   top: s1coords.top + window.pageYOffset,
+  //   behavior: "smooth",
+  // });
+
+  // Modern Way
+  section1.scrollIntoView({ behavior: "smooth" });
+});
+
+////////////////////////////////
+// Page Navigation
+
+// document.querySelectorAll(".nav__link").forEach(function (el) {
+//   el.addEventListener("click", function (e) {
+//     e.preventDefault();
+//     // console.log("Link");
+//     const id = this.getAttribute("href");
+//     console.log(id);
+//     document.querySelector(id).scrollIntoView({
+//       behavior: "smooth",
+//     });
+//   });
+// });
+
+// Event Deligation:
+// 1. Add event listener to common parent element
+// 2. Determine what element originated the event
+
+document.querySelector(".nav__links").addEventListener("click", function (e) {
+  // console.log(e.target);
+  e.preventDefault();
+  // Matching strategy
+  if (e.target.classList.contains("nav__link")) {
+    const id = e.target.getAttribute("href");
+    // console.log(id);
+    document.querySelector(id).scrollIntoView({
+      behavior: "smooth",
+    });
+  }
+});
+
+////////////////////////////////
+// Page Navigation
 
 ////////////////////////////////
 ////////////////////////////////
@@ -102,79 +170,79 @@ document.addEventListener("keydown", function (e) {
 // // Don't use! Overwrite content
 // logo.className = "jonas";
 
-const btnScrollTo = document.querySelector(".btn--scroll-to");
-const section1 = document.querySelector("#section--1");
+// const btnScrollTo = document.querySelector(".btn--scroll-to");
+// const section1 = document.querySelector("#section--1");
 
-btnScrollTo.addEventListener("click", function (e) {
-  const s1coords = section1.getBoundingClientRect();
-  console.log(s1coords);
-  console.log(e.target.getBoundingClientRect());
+// btnScrollTo.addEventListener("click", function (e) {
+//   const s1coords = section1.getBoundingClientRect();
+//   console.log(s1coords);
+//   console.log(e.target.getBoundingClientRect());
 
-  console.log("Current Scroll pos", window.pageXOffset, window.pageYOffset);
+//   console.log("Current Scroll pos", window.pageXOffset, window.pageYOffset);
 
-  console.log(
-    "Document Client Height/Width",
-    document.documentElement.clientHeight,
-    document.documentElement.clientWidth
-  );
+//   console.log(
+//     "Document Client Height/Width",
+//     document.documentElement.clientHeight,
+//     document.documentElement.clientWidth
+//   );
 
-  //  Scrolling
-  // window.scrollTo(
-  //   s1coords.left + window.pageXOffset,
-  //   s1coords.top + window.pageYOffset
-  // );
+//   //  Scrolling
+//   // window.scrollTo(
+//   //   s1coords.left + window.pageXOffset,
+//   //   s1coords.top + window.pageYOffset
+//   // );
 
-  // Smooth Scroll
-  // window.scrollTo({
-  //   left: s1coords.left + window.pageXOffset,
-  //   top: s1coords.top + window.pageYOffset,
-  //   behavior: "smooth",
-  // });
+//   // Smooth Scroll
+//   // window.scrollTo({
+//   //   left: s1coords.left + window.pageXOffset,
+//   //   top: s1coords.top + window.pageYOffset,
+//   //   behavior: "smooth",
+//   // });
 
-  // Modern Way
-  section1.scrollIntoView({ behavior: "smooth" });
-});
-
-const h1 = document.querySelector("h1");
-const alertH1 = function () {
-  alert(`mouseenter: Great! You're reading the header!`);
-  // h1.removeEventListener("mouseenter", alertH1);
-};
-
-// Can add multiple event listeners
-h1.addEventListener("mouseenter", alertH1);
-
-// TimeOut
-setTimeout(() => h1.removeEventListener("mouseenter", alertH1), 3000);
-
-// Old school way
-// h1.onmouseenter(function (e) {
-//   alert(`mouseenter: Great! You're reading the header!`);
+//   // Modern Way
+//   section1.scrollIntoView({ behavior: "smooth" });
 // });
 
-///////////////////////////////////////////////////
+// const h1 = document.querySelector("h1");
+// const alertH1 = function () {
+//   alert(`mouseenter: Great! You're reading the header!`);
+//   // h1.removeEventListener("mouseenter", alertH1);
+// };
 
-const randomInt = (min, max) =>
-  Math.floor(Math.random() * (max - min + 1) + min);
+// // Can add multiple event listeners
+// h1.addEventListener("mouseenter", alertH1);
 
-const randomColor = () =>
-  `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+// // TimeOut
+// setTimeout(() => h1.removeEventListener("mouseenter", alertH1), 3000);
 
-document.querySelector(`.nav__link`).addEventListener(`click`, function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log(`LINK`, e.target);
-  console.log(e.currentTarget === this);
+// // Old school way
+// // h1.onmouseenter(function (e) {
+// //   alert(`mouseenter: Great! You're reading the header!`);
+// // });
 
-  // Stop propagation
-  // e.stopPropagation();
-});
+// ///////////////////////////////////////////////////
 
-document.querySelector(`.nav__links`).addEventListener(`click`, function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log(`CONTAINER`, e.target);
-});
+// const randomInt = (min, max) =>
+//   Math.floor(Math.random() * (max - min + 1) + min);
 
-document.querySelector(`.nav`).addEventListener(`click`, function (e) {
-  this.style.backgroundColor = randomColor();
-  console.log(`NAV`, e.target);
-});
+// const randomColor = () =>
+//   `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+
+// document.querySelector(`.nav__link`).addEventListener(`click`, function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log(`LINK`, e.target);
+//   console.log(e.currentTarget === this);
+
+//   // Stop propagation
+//   // e.stopPropagation();
+// });
+
+// document.querySelector(`.nav__links`).addEventListener(`click`, function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log(`CONTAINER`, e.target);
+// });
+
+// document.querySelector(`.nav`).addEventListener(`click`, function (e) {
+//   this.style.backgroundColor = randomColor();
+//   console.log(`NAV`, e.target);
+// });
