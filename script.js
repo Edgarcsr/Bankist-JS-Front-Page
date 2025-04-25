@@ -72,7 +72,6 @@ btnScrollTo.addEventListener("click", function (e) {
 
 ////////////////////////////////
 // Page Navigation
-
 // document.querySelectorAll(".nav__link").forEach(function (el) {
 //   el.addEventListener("click", function (e) {
 //     e.preventDefault();
@@ -205,7 +204,7 @@ const sectionObserver = new IntersectionObserver(revealSection, {
 
 allSections.forEach(function (section) {
   sectionObserver.observe(section);
-  section.classList.add("section--hidden");
+  // section.classList.add("section--hidden");
 });
 
 // Lazy Images
@@ -216,7 +215,7 @@ const loadImage = function (entries, observer) {
   if (!entry.isIntersecting) return;
   // Replace src with data-src
   entry.target.src = entry.target.dataset.src;
-  entry.target.addEventListener("load", function (e) {
+  entry.target.addEventListener("load", function () {
     entry.target.classList.remove("lazy-img");
   });
   observer.unobserve(entry.target);
@@ -230,6 +229,44 @@ const imgObserver = new IntersectionObserver(loadImage, {
 
 imgTargets.forEach((img) => imgObserver.observe(img));
 
+// Slide
+const slides = document.querySelectorAll(".slide");
+const btnLeft = document.querySelector(".slider__btn--left");
+const btnRight = document.querySelector(".slider__btn--right");
+
+let curSlide = 0;
+const maxSlide = slides.length - 1;
+
+const goToSlide = function (slide) {
+  slides.forEach(
+    (s, i) => (s.style.transform = `translateX(${(i - slide) * 100}%)`)
+  );
+};
+
+goToSlide(0);
+
+// Next Slide
+
+const nextSlide = function () {
+  if (curSlide === maxSlide) {
+    curSlide = 0;
+  } else {
+    curSlide++;
+  }
+  goToSlide(curSlide);
+};
+
+const prevSlide = function () {
+  if (curSlide === 0) {
+    curSlide = maxSlide;
+  } else {
+    curSlide--;
+  }
+  goToSlide(curSlide);
+};
+
+btnRight.addEventListener("click", nextSlide);
+btnLeft.addEventListener("click", prevSlide);
 ////////////////////////////////
 ////////////////////////////////
 
